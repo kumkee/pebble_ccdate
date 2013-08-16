@@ -1,3 +1,6 @@
+#ifndef LYLUNAR_H
+#define LYLUNAR_H
+
 typedef char byte;
 
 typedef struct {
@@ -6,3 +9,5 @@ typedef struct {
 } Date;
 
 void Solar2Lunar(Date*);
+
+#endif
