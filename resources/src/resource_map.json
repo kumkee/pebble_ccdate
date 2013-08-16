@@ -11,7 +11,7 @@
 
         {
         "type": "font",
-        "characterRegex": "[|0-9]",
+        "characterRegex": "[:0-9]",
         "defName": "FONT_ROBOTO_BOLD_SUBSET_49",
         "file": "fonts/Roboto-Bold.ttf"
         },
