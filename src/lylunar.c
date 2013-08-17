@@ -75,7 +75,7 @@ static int moon[2] = {29,30}; /* a short (long) lunar month has 29 (30) days */
 
 
 
-Date solar, lunar;//, gan, zhi, gan2, zhi2, lunar2;
+//Date solar, lunar;//, gan, zhi, gan2, zhi2, lunar2;
 
 int ymonth[Nyear];	/* number of lunar months in the years */
 int yday[Nyear];	/* number of lunar days in the years */
@@ -99,7 +99,7 @@ void Solar2Lunar(Date *d)
     offset = Solar2Day(d);
     
     /* A lunar day begins at 11 p.m. */
-    if (solar.hour == 23)
+    if (d->hour == 23)
 	offset++;
 
     Day2Lunar(offset, d);
