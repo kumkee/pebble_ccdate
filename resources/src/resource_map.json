@@ -3,6 +3,12 @@
  "versionDefName": "APP_RESOURCES",
  "media": [
         {
+        "type": "png",
+        "defName": "IMAGE_MENU_ICON",
+        "file": "images/menu_icon.png"
+        },
+
+        {
         "type": "font",
         "characterRegex": "[a-zA-Z/0-9 ]",
         "defName": "FONT_ROBOTO_CONDENSED_21",

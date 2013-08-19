@@ -4,14 +4,14 @@
 
 #include "lylunar.h"
 
-const bool ZhDisplay = false;
+const bool ZhDisplay = true;
 
 
 #define MY_UUID { 0xDF, 0x64, 0x37, 0x11, 0x9B, 0xF3, 0x43, 0x49, 0xBA, 0x47, 0xA4, 0x3D, 0x37, 0xB7, 0xDC, 0x8A }
 PBL_APP_INFO(MY_UUID,
              "Chinese Calendar Date", "kumkee",
-             1, 2, /* App version */
-             DEFAULT_MENU_ICON,
+             1, 2 /* App version */,
+             RESOURCE_ID_IMAGE_MENU_ICON,
              APP_INFO_WATCH_FACE);
 
 Window window;
@@ -89,11 +89,11 @@ void CDateDisplayNo(Date *d, char* text)
   if(i)	text[0] = 'L';
   text[i+0] = d->month/10 + '0';
   text[i+1] = d->month%10 + '0';
-  text[i+2] = 'm';
+  text[i+2] = 'M';
   text[i+3] = '/';
   text[i+4] = d->day/10 + '0';
   text[i+5] = d->day%10 + '0';
-  text[i+6] = 'd';
+  text[i+6] = 'D';
   text[i+7] = 0;
 }
 
