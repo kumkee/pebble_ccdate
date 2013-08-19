@@ -4,24 +4,13 @@
 
 #include "lylunar.h"
 
-#define zhLen 3
-
-//TODO: move these to function scope
-char ZhDigit[10][zhLen+1] = { "正", "一", "二", "三", "四", "五", "六", "七", "八", "九" };
-
-char ZhDigit2[3][zhLen+1] = { "初", "十", "廿" }; //digit in ten's place
-
-char ZhLeap[] = "閏";
-
-char ZhMonth[] = "月";
-
-char* ZhTen[3] = { ZhDigit2[0], ZhDigit[2], ZhDigit[3] }; //初, 二, 三
+const bool ZhDisplay = false;
 
 
 #define MY_UUID { 0xDF, 0x64, 0x37, 0x11, 0x9B, 0xF3, 0x43, 0x49, 0xBA, 0x47, 0xA4, 0x3D, 0x37, 0xB7, 0xDC, 0x8A }
 PBL_APP_INFO(MY_UUID,
              "Chinese Calendar Date", "kumkee",
-             1, 0, /* App version */
+             1, 2, /* App version */
              DEFAULT_MENU_ICON,
              APP_INFO_WATCH_FACE);
 
@@ -46,8 +35,6 @@ void line_layer_update_callback(Layer *me, GContext* ctx) {
 
 }
 
-
-const bool ZhDisplay = true;
 
 void handle_init(AppContextRef ctx) {
 
@@ -111,8 +98,15 @@ void CDateDisplayNo(Date *d, char* text)
 }
 
 
+#define zhLen 3
 void CDateDisplayZh(Date *d, char* text)
 {
+  char ZhDigit[10][zhLen+1] = { "正", "一", "二", "三", "四", "五", "六", "七", "八", "九" };
+  char ZhDigit2[3][zhLen+1] = { "初", "十", "廿" }; //digit in ten's place
+  char ZhLeap[] = "閏";
+  char ZhMonth[] = "月";
+  char* ZhTen[3] = { ZhDigit2[0], ZhDigit[2], ZhDigit[3] }; //初, 二, 三
+
   int i,j;
   int place = 0;
   i = d->leap?1:0;
