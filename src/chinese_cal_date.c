@@ -31,6 +31,9 @@ TextLayer text_cdate_layer; //Tradictional chinese date display
 TextLayer text_gdate_layer; //Gregorian calendar date
 TextLayer text_time_layer;
 
+static bool is_cdate_drawn = false;
+static bool is_gdate_drawn = false;
+
 Layer line_layer;
 
 
@@ -175,22 +178,26 @@ void handle_minute_tick(AppContextRef ctx, PebbleTickEvent *evt) {
 
   char *time_format;
 
-
-  GenerateCDateText(evt->tick_time, ccd_text);
-
-  text_layer_set_text(&text_cdate_layer, ccd_text);
-
-
-  // TODO: Only update the date when it's changed.
-  string_format_time(date_text, sizeof(date_text), "%B %e", evt->tick_time);
-  text_layer_set_text(&text_gdate_layer, date_text);
-
-
   if (clock_is_24h_style()) {
     time_format = "%R";
   } else {
     time_format = "%I:%M";
   }
+
+
+  if(evt->tick_time->tm_hour==23 || (!is_cdate_drawn)){
+    GenerateCDateText(evt->tick_time, ccd_text);
+    text_layer_set_text(&text_cdate_layer, ccd_text);
+    is_cdate_drawn = true;
+  }
+
+
+  if( (evt->units_changed & DAY_UNIT) || (!is_gdate_drawn) ){
+    string_format_time(date_text, sizeof(date_text), "%B %e", evt->tick_time);
+    text_layer_set_text(&text_gdate_layer, date_text);
+    is_gdate_drawn = true;
+  }
+
 
   string_format_time(time_text, sizeof(time_text), time_format, evt->tick_time);
 
