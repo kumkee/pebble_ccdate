@@ -99,6 +99,7 @@ void CDateDisplayNo(Date *d, char* text)
 
 
 #define zhLen 3
+#define MvChar(zhi) memcpy(text + place*zhLen, zhi, zhLen)
 void CDateDisplayZh(Date *d, char* text)
 {
   char ZhDigit[10][zhLen+1] = { "正", "一", "二", "三", "四", "五", "六", "七", "八", "九" };
@@ -112,33 +113,35 @@ void CDateDisplayZh(Date *d, char* text)
   i = d->leap?1:0;
   j = (d->month-1)/10==0 ? 0 : 1;
 
-  if(i)	memcpy(text, ZhLeap, zhLen);
+  if(i)	MvChar(ZhLeap);	//閏
 
-  if(j) memcpy(text + i*zhLen, ZhDigit2[1], zhLen); //十 of 十某月
+  place += i;
+  if(j) MvChar(ZhDigit2[1]);		//十 of 十某月
 
-  if(d->month==1)	memcpy(text + (place+i+j)*zhLen, ZhDigit[0], zhLen); //正 of 正月
-  else if(d->month==10)	memcpy(text + (place+i+j)*zhLen, ZhDigit2[1], zhLen);   //十 of 十月
-  else 			memcpy(text + (place+i+j)*zhLen, ZhDigit[d->month%10], zhLen); //某 of 十某月 or 某月
+  place += j;
+  if(d->month==1)	MvChar(ZhDigit[0]);		//正 of 正月
+  else if(d->month==10)	MvChar(ZhDigit2[1]);		//十 of 十月
+  else 			MvChar(ZhDigit[d->month%10]);	//某 of 十某月 or 某月
 
   place++;
 
-  memcpy(text + (place+i+j)*zhLen, ZhMonth, zhLen);
+  MvChar(ZhMonth);	//月
   place++;
 
   if(d->day%10==0){
-	memcpy(text + (place+i+j)*zhLen, ZhTen[d->day/10 - 1], zhLen); //某 of 某十
+	MvChar(ZhTen[d->day/10 - 1]);	//某 of 某十日
 	place++;
-	memcpy(text + (place+i+j)*zhLen, ZhDigit2[1], zhLen); //十 of 某十
+	MvChar(ZhDigit2[1]);		//十 of 某十日
 	place++;
   }
   else{
-	memcpy(text + (place+i+j)*zhLen, ZhDigit2[d->day/10], zhLen); //某 of 某甲
+	MvChar(ZhDigit2[d->day/10]);	//某 of 某甲日
 	place++;
-	memcpy(text + (place+i+j)*zhLen, ZhDigit[d->day%10], zhLen); //甲 of 某甲
+	MvChar(ZhDigit[d->day%10]);	//甲 of 某甲日
 	place++;
   }
 
-  text[(place+i+j)*zhLen] = 0;
+  text[place*zhLen] = 0;
   
 }
 
