@@ -1,5 +1,6 @@
 #ifndef LYLUNAR_H
 #define LYLUNAR_H
+#include "pebble_os.h"
 
 typedef char byte;
 
@@ -9,5 +10,9 @@ typedef struct {
 } Date;
 
 void Solar2Lunar(Date*);
+
+void CDateDisplayNo(Date*, char*);
+void CDateDisplayZh(Date*, char*);
+void GenerateCDateText(PblTm*, char*,bool);
 
 #endif
