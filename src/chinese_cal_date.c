@@ -93,7 +93,7 @@ void handle_minute_tick(AppContextRef ctx, PebbleTickEvent *evt) {
   }
 
 
-  if(evt->tick_time->tm_hour==23 || (!is_cdate_drawn)){
+  if( ((evt->units_changed & HOUR_UNIT) &&evt->tick_time->tm_hour==23) || (!is_cdate_drawn)){
     GenerateCDateText(evt->tick_time, ccd_text, ZhDisplay);
     text_layer_set_text(&text_cdate_layer, ccd_text);
     is_cdate_drawn = true;
